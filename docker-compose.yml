@@ -24,7 +24,7 @@ services:
       - te-base:${TE_WEBAPP}
       - te-java-scripts:${TE_WEBAPP}/resources/lib
       - te-ctl-scripts:${TE_WEBAPP}/scripts
-      ./ets-data:${TE_BASEDIR}
+      - ./ets-data:${TE_BASEDIR}
     networks:
       - apps
 

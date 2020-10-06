@@ -38,7 +38,7 @@ build:
 .PHONY: build
 build:
 	# Maven build TEAMEngine
-	
+	docker-compose -f docker-compose.yml --build teamengine
 
 .PHONY: update
 update: pull up wait

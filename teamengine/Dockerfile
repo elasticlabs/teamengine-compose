@@ -67,9 +67,11 @@ RUN mkdir -p ${TE_WEBAPP} \
   && unzip -e ${TE_BUILD_DIR}/teamengine-web/target/teamengine-web.war -d ${TE_WEBAPP} \
   && cp ${TE_BUILD_DIR}/teamengine-web/pdf/teamengine-web.pdf ${TE_BASEDIR}/docs/ 
 
-TODO TODO TODO / MOVE CATALINA_BASE (https://opengeospatial.github.io/teamengine/installation.html)
+#
+# /!\ If multiple Tomcat instances on single host, need to move CATALINA_BASE (https://opengeospatial.github.io/teamengine/installation.html)
+#
 
-# Copy context file
+# Copy ROOT context file
 COPY conf/ROOT.xml $CATALINA_HOME/conf/Catalina/localhost/ROOT.xml
 
 CMD ["catalina.sh", "run"]

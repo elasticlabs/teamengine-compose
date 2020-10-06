@@ -11,7 +11,7 @@ services:
       - 80:80
       - 443:443
     environment:
-      - VIRTUAL_HOST=*.sdi.elasticlabs.co
+      - VIRTUAL_HOST=*.teamengine.elasticlabs.co
       - VIRTUAL_PORT=9000
     volumes:
       - vhost.d:/etc/nginx/vhost.d
@@ -33,7 +33,7 @@ services:
     depends_on:
       - proxy
     environment:
-      - VIRTUAL_HOST=admin.sdi.elasticlabs.co
+      - VIRTUAL_HOST=admin.teamengine.elasticlabs.co
       - VIRTUAL_PORT=9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

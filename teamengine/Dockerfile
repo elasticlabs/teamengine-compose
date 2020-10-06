@@ -24,7 +24,7 @@ RUN set -eux \
     && chmod -R 755 teamengine
 
 #Change directory, politely configure git and build packages
-WORKDIR $TE_BUILD_DIR/teamengine
+WORKDIR ${TE_BUILD_DIR}/teamengine
 RUN git config --global user.email ${GIT_MAIL}\
     && git config --global user.name ${GIT_NAME} \
     && git stash \
@@ -43,20 +43,20 @@ RUN git config --global user.email ${GIT_MAIL}\
 RUN mkdir -p ${TE_BASEDIR} \ 
     && mkdir -p ${TE_BASEDIR}/docs\
     && chmod -R 755 ${TE_BASEDIR} \
-    && unzip -e ${TE_BUILD_DIR}/teamengine-console/target/teamengine-console-${TE_VERSION}-base.zip -d ${TE_BASEDIR} \
-    && cp ${TE_BUILD_DIR}/teamengine-console/pdf/teamengine-console.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine-core/pdf/teamengine-core.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine-resources/pdf/teamengine-resources.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine-spi/pdf/teamengine-spi.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine-spi-ctl/pdf/teamengine-spi-ctl.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine-tests/pdf/teamengine-tests.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine-virtualization/pdf/teamengine-virtualization.pdf ${TE_BASEDIR}/docs/     
+    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-base.zip -d ${TE_BASEDIR} \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-console/pdf/teamengine-console.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-core/pdf/teamengine-core.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-resources/pdf/teamengine-resources.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi/pdf/teamengine-spi.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi-ctl/pdf/teamengine-spi-ctl.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-tests/pdf/teamengine-tests.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-virtualization/pdf/teamengine-virtualization.pdf ${TE_BASEDIR}/docs/     
 
 # Step (2/ ) -> Console utility scripts
 # Base directory (teamengine-console-5.4-bin.zip)
 #   -> utils sub-directory contains scripts and libs (https://opengeospatial.github.io/teamengine/users.html)
 RUN mkdir -p ${TE_BASEDIR}/utils\
-    && unzip -e ${TE_BUILD_DIR}/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_BASEDIR}/utils \
+    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_BASEDIR}/utils \
     && chmod -R 755 ${TE_BASEDIR}/utils
 
 # Step (3/ ) -> Web application & Common libs
@@ -64,8 +64,8 @@ RUN mkdir -p ${TE_BASEDIR}/utils\
 #   -> docs sub-directory contains PDF documentation
 RUN mkdir -p ${TE_WEBAPP} \
   && chmod -R 755 ${TE_WEBAPP} \
-  && unzip -e ${TE_BUILD_DIR}/teamengine-web/target/teamengine-web.war -d ${TE_WEBAPP} \
-  && cp ${TE_BUILD_DIR}/teamengine-web/pdf/teamengine-web.pdf ${TE_BASEDIR}/docs/ 
+  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine-web.war -d ${TE_WEBAPP} \
+  && cp ${TE_BUILD_DIR}/teamengine/teamengine-web/pdf/teamengine-web.pdf ${TE_BASEDIR}/docs/ 
 
 #
 # /!\ If multiple Tomcat instances on single host, need to move CATALINA_BASE (https://opengeospatial.github.io/teamengine/installation.html)

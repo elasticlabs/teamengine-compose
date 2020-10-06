@@ -65,7 +65,7 @@ RUN mkdir -p ${TE_BASEDIR}/utils\
 RUN mkdir -p ${TE_WEBAPP} \
   && chmod -R 755 ${TE_WEBAPP} \
   && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP} \
-  && cp ${TE_BUILD_DIR}/teamengine/teamengine-web/pdf/teamengine-web.pdf ${TE_BASEDIR}/docs/ 
+  && cp ${TE_BUILD_DIR}/teamengine/teamengine-web/target/pdf/teamengine-web.pdf ${TE_BASEDIR}/docs/ 
 
 #
 # /!\ If multiple Tomcat instances on single host, need to move CATALINA_BASE (https://opengeospatial.github.io/teamengine/installation.html)

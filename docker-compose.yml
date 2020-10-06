@@ -14,12 +14,10 @@ services:
       - VIRTUAL_PORT=8081
       - TE_BASE=${TE_INSTALLDIR}
       - TE_VERSION=${TE_VERSION}
-    env_file:
-      - ./teamengine/.env
     volumes:
-      - te-base:${TE_BASE}
-      - te-java-scripts:${TE_BASE}/resources/lib
-      - te-ctl-scripts:${TE_BASE}/scripts
+      - te-base:${TE_INSTALLDIR}
+      - te-java-scripts:${TE_INSTALLDIR}/resources/lib
+      - te-ctl-scripts:${TE_INSTALLDIR}/scripts
     #  - ./ets-data:/root/ets-data
     networks:
       - apps

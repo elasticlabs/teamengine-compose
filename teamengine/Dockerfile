@@ -44,13 +44,13 @@ RUN mkdir -p ${TE_BASEDIR} \
     && mkdir -p ${TE_BASEDIR}/docs\
     && chmod -R 755 ${TE_BASEDIR} \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-base.zip -d ${TE_BASEDIR} \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-console/pdf/teamengine-console.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-core/pdf/teamengine-core.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-resources/pdf/teamengine-resources.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi/pdf/teamengine-spi.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi-ctl/pdf/teamengine-spi-ctl.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-tests/pdf/teamengine-tests.pdf ${TE_BASEDIR}/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-virtualization/pdf/teamengine-virtualization.pdf ${TE_BASEDIR}/docs/     
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-console/target/pdf/teamengine-console.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-core/target/pdf/teamengine-core.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-resources/target/pdf/teamengine-resources.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi/target/pdf/teamengine-spi.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi-ctl/target/pdf/teamengine-spi-ctl.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-tests/target/pdf/teamengine-tests.pdf ${TE_BASEDIR}/docs/ \
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-virtualization/target/pdf/teamengine-virtualization.pdf ${TE_BASEDIR}/docs/     
 
 # Step (2/ ) -> Console utility scripts
 # Base directory (teamengine-console-5.4-bin.zip)

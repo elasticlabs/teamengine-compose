@@ -28,6 +28,7 @@ services:
 
 volumes:
   te-base:
+  te-data:
   te-webapp:
 
 networks:

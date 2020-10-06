@@ -22,7 +22,7 @@ services:
       - VIRTUAL_PORT=8080
     volumes:
       - te-data:${TE_BASEDIR}
-      - te-wepapp:${TE_WEBAPP}
+      - te-webapp:${TE_WEBAPP}
     networks:
       - apps
 

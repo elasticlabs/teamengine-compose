@@ -4,7 +4,12 @@ services:
   #
   # Applications
   teamengine:
-    build: ./teamengine
+    build:
+      context: ./teamengine
+      dockerfile: Dockerfile
+      args:
+        - TE_BASE=${TE_INSTALLDIR}
+        - TE_VERSION=${TE_VERSION}
     container_name: teamengine@${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
     expose: 
@@ -12,13 +17,10 @@ services:
     environment: 
       - VIRTUAL_HOST=teamengine.elasticlabs.co
       - VIRTUAL_PORT=8081
-      - TE_BASE=${TE_INSTALLDIR}
-      - TE_VERSION=${TE_VERSION}
     volumes:
       - te-base:${TE_INSTALLDIR}
       - te-java-scripts:${TE_INSTALLDIR}/resources/lib
       - te-ctl-scripts:${TE_INSTALLDIR}/scripts
-    #  - ./ets-data:/root/ets-data
     networks:
       - apps
 

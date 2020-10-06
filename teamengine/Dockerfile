@@ -4,9 +4,9 @@ FROM tomcat:7.0-jdk8
 ARG TE_WEBAPP
 ARG TE_BASEDIR
 ARG TE_VERSION
-ARG TE_BUILD_DIR
 ARG GIT_MAIL
 ARG GIT_NAME
+ENV TE_BUILD_DIR=/root/TE_BASE
 # TEAMEngine recommanded environment variables
 ENV CATALINA_OPTS="-server -Xmx1024m -XX:MaxPermSize=128m -DTE_BASE=$TE_BASEDIR -Dderby.system.home=$DERBY_DATA"
 

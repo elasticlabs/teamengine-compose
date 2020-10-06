@@ -1,6 +1,9 @@
 FROM tomcat:7.0-jdk8
 
+# Version and main directories
 ENV TE_BUILD_DIR=/root/TE_BUILD
+ENV TE_BASE=/usr/local/teamengine
+ENV TE_VERSION=5.4
 
 # Create and set build directory
 RUN mkdir ${TE_BUILD_DIR}

@@ -15,10 +15,10 @@ services:
     env_file:
       - ./teamengine/.env
     volumes:
-      - te-base:/root/TE_BASE
-      - te-java-scripts:/root/TE_BASE/resources/lib
-      - te-ctl-scripts:/root/TE_BASE/scripts
-      - ./ets-data:/root/ets-data
+      - te-base:${TE_BASE}
+      - te-java-scripts:${TE_BASE}/resources/lib
+      - te-ctl-scripts:${TE_BASE}/scripts
+    #  - ./ets-data:/root/ets-data
     networks:
       - apps
 

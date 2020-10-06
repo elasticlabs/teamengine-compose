@@ -38,6 +38,7 @@ build:
 .PHONY: build
 build:
 	# Maven build TEAMEngine
+	
 
 .PHONY: update
 update: pull up wait

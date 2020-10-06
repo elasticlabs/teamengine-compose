@@ -1,13 +1,13 @@
 FROM tomcat:7.0-jdk8
+COPY .env .
 
-# Version and main directories
+# Source and setup variables
+RUN source .env
 ENV TE_BUILD_DIR=/root/TE_BUILD
-ENV TE_BASE=/usr/local/teamengine
-ENV TE_VERSION=5.4
 
 # Create and set build directory
 RUN mkdir ${TE_BUILD_DIR}
-WORKDIR $TE_BUILD_DIR
+WORKDIR ${TE_BUILD_DIR}
 
 # Supplementary packages deployment
 RUN set -eux \
@@ -16,7 +16,7 @@ RUN set -eux \
 		git unzip tree \
     # Clone TEAMEngine repository
     && git clone https://github.com/opengeospatial/teamengine.git \
-    && git checkout $TE_VERSION \
+    && git checkout ${TE_VERSION} \
     && chmod -R 755 teamengine
 
 WORKDIR $TE_BUILD_DIR/teamengine

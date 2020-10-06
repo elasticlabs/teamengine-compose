@@ -64,7 +64,7 @@ RUN mkdir -p ${TE_BASEDIR}/utils\
 #   -> docs sub-directory contains PDF documentation
 RUN mkdir -p ${TE_WEBAPP} \
   && chmod -R 755 ${TE_WEBAPP} \
-  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine-web.war -d ${TE_WEBAPP} \
+  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP} \
   && cp ${TE_BUILD_DIR}/teamengine/teamengine-web/pdf/teamengine-web.pdf ${TE_BASEDIR}/docs/ 
 
 #

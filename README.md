@@ -1,2 +1,2 @@
 # teamengine-compose
-OGC TEALEngine docker-compose automated deployment
+OGC TEAMEngine docker-compose automated deployment

@@ -1,26 +1,26 @@
 version: '3'
 
 services:
-#
-# Applications
-teamengine:
-  build: ./teamengine
-  container_name: teamengine@${COMPOSE_PROJECT_NAME}
-  restart: unless-stopped
-  expose: 
-    - "8081"
-  environment: 
-    - VIRTUAL_HOST=teamengine.elasticlabs.co
-    - VIRTUAL_PORT=8081
-  env_file:
-    - ./teamengine/.env
-  volumes:
-    - te-base:/root/TE_BASE
-    - te-java-scripts:/root/TE_BASE/resources/lib
-    - te-ctl-scripts:/root/TE_BASE/scripts
-    - ./ets-data:/root/ets-data
-  networks:
-    - apps
+  #
+  # Applications
+  teamengine:
+    build: ./teamengine
+    container_name: teamengine@${COMPOSE_PROJECT_NAME}
+    restart: unless-stopped
+    expose: 
+      - "8081"
+    environment: 
+      - VIRTUAL_HOST=teamengine.elasticlabs.co
+      - VIRTUAL_PORT=8081
+    env_file:
+      - ./teamengine/.env
+    volumes:
+      - te-base:/root/TE_BASE
+      - te-java-scripts:/root/TE_BASE/resources/lib
+      - te-ctl-scripts:/root/TE_BASE/scripts
+      - ./ets-data:/root/ets-data
+    networks:
+      - apps
 
 volumes:
   te-base:

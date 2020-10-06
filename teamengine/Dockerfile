@@ -20,7 +20,8 @@ RUN set -eux \
 
 #Change directory and build packages
 WORKDIR $TE_BUILD_DIR/teamengine
-RUN git checkout ${TE_VERSION} \
+RUN git stash \
+    && git checkout ${TE_VERSION} \
     && mvn package \
     && mvn site \
     && tree .

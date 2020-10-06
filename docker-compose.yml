@@ -12,6 +12,8 @@ services:
     environment: 
       - VIRTUAL_HOST=teamengine.elasticlabs.co
       - VIRTUAL_PORT=8081
+      - TE_BASE=${TE_INSTALLDIR}
+      - TE_VERSION=${TE_VERSION}
     env_file:
       - ./teamengine/.env
     volumes:

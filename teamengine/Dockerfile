@@ -1,8 +1,6 @@
 FROM tomcat:7.0-jdk8
-COPY .env .
 
 # Source and setup variables
-RUN source .env
 ENV TE_BUILD_DIR=/root/TE_BUILD
 
 # Create and set build directory

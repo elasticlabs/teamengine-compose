@@ -16,22 +16,19 @@ services:
     container_name: teamengine4${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
     expose: 
-      - "8081"
+      - "8080"
     environment: 
       - VIRTUAL_HOST=teamengine.elasticlabs.co
-      - VIRTUAL_PORT=8081
+      - VIRTUAL_PORT=8080
     volumes:
-      - te-base:${TE_WEBAPP}
-      - te-java-scripts:${TE_WEBAPP}/resources/lib
-      - te-ctl-scripts:${TE_WEBAPP}/scripts
-      - ./ets-data:${TE_BASEDIR}
+      - te-data:${TE_BASEDIR}
+      - te-wepapp:${TE_WEBAPP}
     networks:
       - apps
 
 volumes:
   te-base:
-  te-java-scripts:
-  te-ctl-scripts:
+  te-webapp:
 
 networks:
   apps:

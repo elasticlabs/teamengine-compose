@@ -15,7 +15,7 @@ WORKDIR ${TE_BUILD_DIR}
 RUN set -eux \
     && apt-get update \
 	&& apt-get install -y --no-install-recommends \
-		git unzip tree \
+		git unzip tree maven \
     # Clone TEAMEngine repository
     && git clone https://github.com/opengeospatial/teamengine.git \
     && chmod -R 755 teamengine

@@ -16,7 +16,8 @@ help:
 	@echo " "
 	@echo "Hints for developers:"
 	@echo "  make proxy-up               # Initialize front proxy entrypoint"
-	@echo "  make build                  # Build TEAMEngine and OGC Web services ETS"
+	@echo "  make build-ets              # Build OGC Web services ETS"
+	@echo "  make build                  # Checks needs for ETS suites creation & Build TEAMEngine"
 	@echo "  make up                     # With working proxy, brings up the testing infrastructure"
 	@echo "  make update                 # Update the whole stack"
 	@echo "=============================================================================="
@@ -29,6 +30,10 @@ proxy-up:
 .PHONY: up
 up:
 	#docker-compose up -d --remove-orphans teamengine
+
+.PHONY: build-ets
+build:
+	# Maven build ETS test suites
 
 .PHONY: build
 build:

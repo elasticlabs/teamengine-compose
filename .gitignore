@@ -1,0 +1,2 @@
+# The following directory contains ETS archives .zip and should be set aside from synchronization
+ets-data/**

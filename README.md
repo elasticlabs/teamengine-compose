@@ -15,5 +15,6 @@ OGC TEAMEngine docker-compose automated deployment
 #### Basic administration commands
 * `make proxy-up` -> Initialize front proxy entrypoint
 * `make up` ->  With working proxy, brings up the SDI
-* `make build` -> Build TEAMEngine and OGC Web services ETS
+* `make build-ets` -> Build OGC Web services ETS
+* `make build` -> Checks needs for ETS suites creation & Build TEAMEngine
 * `make update` -> Update the whole stack

@@ -15,12 +15,12 @@ RUN set -eux \
 	&& apt-get install -y --no-install-recommends \
 		git unzip tree \
     # Clone TEAMEngine repository
-    && git clone https://github.com/opengeospatial/teamengine.git \
-    && git checkout ${TE_VERSION} \
-    && chmod -R 755 teamengine
+    && git clone https://github.com/opengeospatial/teamengine.git
 
+#Change directory and build packages
 WORKDIR $TE_BUILD_DIR/teamengine
-
-# Maven 
-RUN mvn package
-RUN tree .
+RUN git checkout ${TE_VERSION} \
+    && chmod -R 755 teamengine \
+    && mvn package \
+    && mvn site \
+    && tree .

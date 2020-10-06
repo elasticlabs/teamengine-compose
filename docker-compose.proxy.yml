@@ -19,8 +19,6 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - apps
-      # Implementation specific. Add upper level proxy if needed
-      - server-backend
 
 #
 # Admin toolkit

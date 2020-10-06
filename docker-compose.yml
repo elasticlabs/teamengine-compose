@@ -8,7 +8,8 @@ services:
       context: ./teamengine
       dockerfile: Dockerfile
       args:
-        - TE_BASE=${TE_INSTALLDIR}
+        - TE_WEBAPP=${TE_WEBAPP}
+        - TE_BASEDIR=${TE_BASEDIR}
         - TE_VERSION=${TE_VERSION}
         - GIT_NAME="Elastic Labs"
         - GIT_MAIL="contact@elasticlabs.co"
@@ -20,9 +21,10 @@ services:
       - VIRTUAL_HOST=teamengine.elasticlabs.co
       - VIRTUAL_PORT=8081
     volumes:
-      - te-base:${TE_INSTALLDIR}
-      - te-java-scripts:${TE_INSTALLDIR}/resources/lib
-      - te-ctl-scripts:${TE_INSTALLDIR}/scripts
+      - te-base:${TE_WEBAPP}
+      - te-java-scripts:${TE_WEBAPP}/resources/lib
+      - te-ctl-scripts:${TE_WEBAPP}/scripts
+      ./ets-data:${TE_BASEDIR}
     networks:
       - apps
 

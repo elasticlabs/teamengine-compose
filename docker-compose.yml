@@ -10,6 +10,8 @@ services:
       args:
         - TE_BASE=${TE_INSTALLDIR}
         - TE_VERSION=${TE_VERSION}
+        - GIT_NAME="Elastic Labs"
+        - GIT_MAIL="contact@elasticlabs.co"
     container_name: teamengine@${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
     expose: 

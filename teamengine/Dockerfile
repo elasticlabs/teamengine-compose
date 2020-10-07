@@ -41,7 +41,7 @@ RUN mkdir -p ${TE_WEBAPP} \
   && for i in bin logs temp webapps work lib users; do mkdir -p ${TE_WEBAPP}/$i; done \
   && cp $CATALINA_HOME/bin/catalina.sh ${TE_WEBAPP}/bin/ \
   && cp -r $CATALINA_HOME/conf ${TE_WEBAPP} \
-  && chmod -R 755 ${TE_WEBAPP} \
+  && chmod -R 777 ${TE_WEBAPP} \
   # Deployment of the main WAR file + common libs
   && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP}/webapps/ \
   && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine-common-libs.zip -d ${TE_WEBAPP}/libs
@@ -53,7 +53,7 @@ RUN mkdir -p ${TE_WEBAPP}/TE_BASE \
     && mkdir -p ${TE_WEBAPP}/TE_BASE/utils \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-base.zip -d ${TE_WEBAPP}/TE_BASE/ \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/ \
-    && chmod -R 755 ${TE_WEBAPP}/TE_BASE
+    && chmod -R 777 ${TE_WEBAPP}/TE_BASE
 
 # TEAMEngine base utilities and recommanded options
 ENV CATALINA_BASE=${TE_WEBAPP}

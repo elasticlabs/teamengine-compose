@@ -30,7 +30,8 @@ proxy-up:
 .PHONY: up
 up:
 	#docker-compose up -d --remove-orphans teamengine
-    docker-compose -f docker-compose.yml up -d portainer
+    git pull
+	docker-compose -f docker-compose.yml up -d portainer
 
 .PHONY: build-ets
 build:

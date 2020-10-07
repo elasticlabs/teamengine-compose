@@ -73,7 +73,7 @@ RUN echo "[INFO] Base directories " \
     && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi-ctl/target/pdf/teamengine-spi-ctl.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
     && cp ${TE_BUILD_DIR}/teamengine/teamengine-tests/target/pdf/teamengine-tests.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
     && cp ${TE_BUILD_DIR}/teamengine/teamengine-virtualization/target/pdf/teamengine-virtualization.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-web/target/pdf/teamengine-web.pdf ${TE_WEBAPP}/docs/
+    && cp ${TE_BUILD_DIR}/teamengine/teamengine-web/target/pdf/teamengine-web.pdf ${TE_WEBAPP}/TE_BASE/docs/
 
 #
 # Step (4/ ) -> Copy :

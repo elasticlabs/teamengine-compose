@@ -27,8 +27,8 @@ RUN git config --global user.email ${GIT_MAIL}\
     && git config --global user.name ${GIT_NAME} \
     && git stash \
     && git checkout ${TE_VERSION} \
-    && mvn -q package -DskipTests=true \
-    && mvn -q site -DskipTests=true 
+    && mvn package -DskipTests=true \
+    && mvn site -DskipTests=true 
     #debug -> && tree .
 
 #
@@ -38,7 +38,7 @@ RUN git config --global user.email ${GIT_MAIL}\
 # We move CATALINA_BASE (https://opengeospatial.github.io/teamengine/installation.html)
 #   -> docs sub-directory contains PDF documentation
 RUN mkdir -p ${TE_WEBAPP} \
-  && for i in bin logs temp webapps work lib users; do mkdir p- ${TE_WEBAPP}/$i; done \
+  && for i in bin logs temp webapps work lib users; do mkdir -p ${TE_WEBAPP}/$i; done \
   && cp $CATALINA_HOME/bin/catalina.sh ${TE_WEBAPP}/bin/ \
   && cp -r $CATALINA_HOME/conf ${TE_WEBAPP} \
   && chmod -R 755 ${TE_WEBAPP} \

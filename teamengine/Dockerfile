@@ -43,7 +43,9 @@ RUN mkdir -p ${TE_WEBAPP} \
   && cp -r $CATALINA_HOME/conf ${TE_WEBAPP} \
   && chmod -R 777 ${TE_WEBAPP} \
   # Deployment of the main WAR file + common libs
-  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP}/webapps \
+  && mkdir -p ${TE_WEBAPP}/webapps/teamengine \
+  && chmod 777 ${TE_WEBAPP}/webapps/teamengine \
+  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP}/webapps/teamengine \
   && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine-common-libs.zip -d ${TE_WEBAPP}/lib
 
 #
@@ -52,8 +54,7 @@ RUN mkdir -p ${TE_WEBAPP} \
 RUN mkdir -p ${TE_WEBAPP}/TE_BASE \
     && mkdir -p ${TE_WEBAPP}/TE_BASE/utils \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-base.zip -d ${TE_WEBAPP}/TE_BASE/ \
-    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/ \
-    && chmod -R 777 ${TE_WEBAPP}/TE_BASE
+    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/ 
 
 ENV CATALINA_BASE=${TE_WEBAPP}
 ENV TE_BASE=${TE_WEBAPP}/TE_BASE
@@ -80,9 +81,10 @@ RUN echo "[INFO] Base directories " \
 #      - ROOT context file
 #      - TEAMEngine Site defaults
 COPY conf/users/* ${TE_WEBAPP}/TE_BASE/users/
-COPY conf/ROOT.xml ${CATALINA_BASE}/conf/Catalina/localhost/ROOT.xml
+# COPY conf/ROOT.xml ${CATALINA_BASE}/conf/Catalina/localhost/ROOT.xml
 # TE Site configuration files
-RUN rm -rf ${TE_WEBAPP}/TE_BASE/resources/site/*
+RUN rm -rf ${TE_WEBAPP}/TE_BASE/resources/site/* \
+    && chmod -R 777 ${TE_WEBAPP}/TE_BASE
 COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

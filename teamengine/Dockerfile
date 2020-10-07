@@ -84,6 +84,6 @@ COPY conf/users/* ${TE_WEBAPP}/TE_BASE/users/
 COPY conf/ROOT.xml $CATALINA_HOME/conf/Catalina/localhost/ROOT.xml
 # TE Site configuration files
 RUN rm -rf ${TE_WEBAPP}/TE_BASE/resources/site/*
-COPY site/* ${TE_WEBAPP}/TE_BASE/resources/site/
+COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 
 CMD ["catalina.sh", "run"]

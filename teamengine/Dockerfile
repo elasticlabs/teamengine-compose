@@ -44,7 +44,7 @@ RUN mkdir -p ${TE_WEBAPP} \
   && chmod -R 777 ${TE_WEBAPP} \
   # Deployment of the main WAR file + common libs
   && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP}/webapps/teamengine \
-  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine-common-libs.zip -d ${TE_WEBAPP}/libs
+  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine-common-libs.zip -d ${TE_WEBAPP}/lib
 
 #
 # Step (2/ ) -> TEAMEngine commandline binaries
@@ -55,10 +55,9 @@ RUN mkdir -p ${TE_WEBAPP}/TE_BASE \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/ \
     && chmod -R 777 ${TE_WEBAPP}/TE_BASE
 
-# TEAMEngine base utilities and recommanded options
 ENV CATALINA_BASE=${TE_WEBAPP}
 ENV TE_BASE=${TE_WEBAPP}/TE_BASE
-ENV CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE"
+ENV CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE -Dderby.system.home=${TE_WEBAPP}/derby_data"
 
 # Step (3/ ) -> Docuemntation 
 #   -> docs sub-directory contains PDF documentation

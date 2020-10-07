@@ -58,7 +58,7 @@ RUN mkdir -p ${TE_WEBAPP}/TE_BASE \
 # TEAMEngine base utilities and recommanded options
 ENV CATALINA_BASE=${TE_WEBAPP}
 ENV TE_BASE=${TE_WEBAPP}/TE_BASE
-ENV CATALINA_OPTS="-server -Xmx1024m -XX:MaxPermSize=128m -DTE_BASE=$TE_BASE -Dderby.system.home=$DERBY_DATA"
+ENV CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE"
 
 # Step (3/ ) -> Docuemntation 
 #   -> docs sub-directory contains PDF documentation

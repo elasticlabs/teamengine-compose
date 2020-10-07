@@ -9,7 +9,6 @@ services:
       dockerfile: Dockerfile
       args:
         - TE_WEBAPP=${TE_WEBAPP}
-        - TE_BASEDIR=${TE_BASEDIR}
         - TE_VERSION=${TE_VERSION}
         - GIT_NAME="Elastic Labs"
         - GIT_MAIL="contact@elasticlabs.co"
@@ -21,7 +20,6 @@ services:
       - VIRTUAL_HOST=teamengine.elasticlabs.co
       - VIRTUAL_PORT=8080
     volumes:
-      - te-data:${TE_BASEDIR}
       - te-webapp:${TE_WEBAPP}
     networks:
       - apps

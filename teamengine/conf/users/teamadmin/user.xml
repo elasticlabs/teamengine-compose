@@ -1,0 +1,8 @@
+<user>
+ <name>teamadmin</name>
+ <roles>
+  <name>teamadmin</name>
+ </roles>
+ <password>changeme</password>
+ <email></email>
+</user>

@@ -43,7 +43,7 @@ RUN mkdir -p ${TE_WEBAPP} \
   && cp -r $CATALINA_HOME/conf ${TE_WEBAPP} \
   && chmod -R 777 ${TE_WEBAPP} \
   # Deployment of the main WAR file + common libs
-  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP}/webapps/teamengine \
+  && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine.war -d ${TE_WEBAPP}/webapps \
   && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-web/target/teamengine-common-libs.zip -d ${TE_WEBAPP}/lib
 
 #

@@ -28,7 +28,6 @@ RUN git config --global user.email ${GIT_MAIL}\
     && git stash \
     && git checkout ${TE_VERSION} \
     && mvn package -DskipTests=true \
-    && mvn site -DskipTests=true 
     #debug -> && tree .
 
 #
@@ -36,7 +35,6 @@ RUN git config --global user.email ${GIT_MAIL}\
 # Base directory (teamengine.war and teamengine-common-libs.zip)
 #
 # We move CATALINA_BASE (https://opengeospatial.github.io/teamengine/installation.html)
-#   -> docs sub-directory contains PDF documentation
 RUN mkdir -p ${TE_WEBAPP} \
   && for i in bin logs temp webapps work lib users; do mkdir -p ${TE_WEBAPP}/$i; done \
   && cp $CATALINA_HOME/bin/catalina.sh ${TE_WEBAPP}/bin/ \
@@ -60,23 +58,8 @@ ENV CATALINA_BASE=${TE_WEBAPP}
 ENV TE_BASE=${TE_WEBAPP}/TE_BASE
 ENV CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE -Dderby.system.home=${TE_WEBAPP}/derby_data"
 
-# Step (3/ ) -> Docuemntation 
-#   -> docs sub-directory contains PDF documentation
-RUN echo "[INFO] Base directories " \
-    && mkdir -p ${TE_WEBAPP}/TE_BASE/docs \
-    && chmod -R 755 ${TE_WEBAPP}/TE_BASE/docs \
-    && echo "[INFO] PDF documentation deployment into doc subdirectory" \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-console/target/pdf/teamengine-console.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-core/target/pdf/teamengine-core.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-resources/target/pdf/teamengine-resources.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi/target/pdf/teamengine-spi.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-spi-ctl/target/pdf/teamengine-spi-ctl.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-tests/target/pdf/teamengine-tests.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-virtualization/target/pdf/teamengine-virtualization.pdf ${TE_WEBAPP}/TE_BASE/docs/ \
-    && cp ${TE_BUILD_DIR}/teamengine/teamengine-web/target/pdf/teamengine-web.pdf ${TE_WEBAPP}/TE_BASE/docs/
-
 #
-# Step (4/ ) -> Copy :
+# Step (3/ ) -> Copy :
 #      - User sample (default : teamadmin pwd: changeme)
 #      - ROOT context file
 #      - TEAMEngine Site defaults
@@ -85,5 +68,11 @@ COPY conf/users/* ${TE_WEBAPP}/TE_BASE/users/
 RUN rm -rf ${TE_WEBAPP}/TE_BASE/resources/site/* \
     && chmod -R 777 ${TE_WEBAPP}/TE_BASE
 COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
+
+#
+# Step (4/ ) -> ETS deployment :
+#       - CSV list as input
+#       - Basic shell script for ETS gather/build/deploy
+
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

@@ -27,9 +27,7 @@ RUN git config --global user.email ${GIT_MAIL}\
     && git config --global user.name ${GIT_NAME} \
     && git stash \
     && git checkout ${TE_VERSION} \
-    && mvn package -DskipTests=true \
-    #debug -> && tree .
-
+    && mvn package -DskipTests=true
 #
 # Step (1/ ) -> Web application & Common libs
 # Base directory (teamengine.war and teamengine-common-libs.zip)

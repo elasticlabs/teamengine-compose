@@ -87,18 +87,18 @@ RUN rm -rf ets-* \
     && ets_pwd=`echo $ets | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
     # Build ETS
     && cd $ets_pwd \
-    && git stash && git checkout $tag | grep HEAD\
-    && mvn clean package -DskipTests=true | grep ^\[ \
+    && git stash && git checkout $tag \
+    && mvn clean package -DskipTests=true \
     && cd ..; \
   done
 
 WORKDIR ${TE_BUILD_DIR}
-RUN for i in `ls | grep ets`; do \
+RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
+  && for i in `ls | grep ets`; do \
     cd ${i}/target \
     # Clarify if ETS of CTL, then move files where they belong to
     #    - Copy CTL files to $TE_BASE/scripts
     #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
-    #  last=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'` 
     && zip_ctl_file=`ls *ctl.zip | grep -m 1 "ctl"` \
     && if ls *deps.zip 1> /dev/null 2>&1; \
       then \
@@ -115,7 +115,7 @@ RUN for i in `ls | grep ets`; do \
       fi \
     # Do some cleanup and get ready for next loop
     && cd ${TE_BUILD_DIR} && unset zip_dep_file && unset zip_ctl_file \
-    && [ "$i" == "$last" ] && break || echo "[INFO] Finished installation of $i"; \
+    && [[ "$i" == "$last_item" ]] && break || echo "[INFO] Finished installation of $i"; \
   done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

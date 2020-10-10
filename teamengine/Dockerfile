@@ -86,7 +86,7 @@ RUN rm -rf ets-* \
     && ets_pwd=`echo $ets | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
     # Build ETS
     && git -C ${ets_pwd} stash && git -C ${ets_pwd} checkout $tag \
-    && mvn -q clean package -f $ets_pwd/pom.xml -DskipTests=true \
+    && mvn clean package -f $ets_pwd/pom.xml -DskipTests=true \
     && if [ "$i" = "$(more $ETS_FILE | tail -1)" ] ; then break; else echo "[INFO] Finished building $i"; fi;\
   done
 

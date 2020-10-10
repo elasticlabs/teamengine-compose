@@ -75,8 +75,8 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 WORKDIR ${TE_BUILD_DIR}
 COPY conf/te_* ./
 ENV ETS_FILE=te_repositories.csv
-RUN for i in `more $ETS_FILE`; \
-  do; \
+RUN for i in `more $ETS_FILE` \
+  do \
     ets=`echo $i | awk -F "," '{print $1}'` \
     && tag=`echo $i | awk -F "," '{print $2}'` \
     # Clone directory

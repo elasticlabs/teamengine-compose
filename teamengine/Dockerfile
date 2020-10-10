@@ -89,7 +89,7 @@ RUN rm -rf ets-* \
     && cd $ets_pwd \
     && git stash && git checkout $tag \
     && mvn clean package -DskipTests=true \
-    && cd .. \
+    && cd ..; \
   done
 
 WORKDIR ${TE_BUILD_DIR}

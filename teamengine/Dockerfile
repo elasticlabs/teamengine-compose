@@ -53,6 +53,7 @@ RUN mkdir -p ${TE_WEBAPP}/TE_BASE \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/ 
 
 ENV CATALINA_BASE=${TE_WEBAPP}
+ENV TE_WEB_BASE=${TE_WEBAPP}/webapps/app
 ENV TE_BASE=${TE_WEBAPP}/TE_BASE
 ENV CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE -Dderby.system.home=${TE_WEBAPP}/derby_data"
 
@@ -69,8 +70,11 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 
 #
 # Step (4/ ) -> ETS deployment :
-#       - CSV list as input
+#       - CSV list as input (see https://github.com/opengeospatial/teamengine-builder/)
 #       - Basic shell script for ETS gather/build/deploy
-
+WORKDIR ${TE_BUILD_DIR}
+COPY conf/te_* .
+RUN chmod 755 ./te_* \
+  && ./te_build_tests.sh
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

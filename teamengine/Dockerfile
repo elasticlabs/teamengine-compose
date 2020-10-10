@@ -94,9 +94,9 @@ RUN rm -rf ets-* \
 # ... Then do a little cleanup
 WORKDIR ${TE_BUILD_DIR}
 RUN for i in `ls . | grep ets`; do \
-      echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
-      && if `ls ${i}/target/*.zip`; \
+      if `ls ${i}/target/*.zip`; \
         then \
+          echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts"; \
           zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"`; \
           unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts; \
           zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"`; \

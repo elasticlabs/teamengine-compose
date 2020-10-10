@@ -99,14 +99,15 @@ RUN for i in `ls . | grep ets`; do \
           zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"`; \
           echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts"; \
           unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts; \
-          zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"`; \
-          # We onlt consider optional libraries when they are actually available
-          if [ $(echo $zip_dep_file | wc) -gt 0 ] ; then \
+          if [ $(ls ${i}/target | grep zip | grep dep | wc -l) -gt 0 ] ; \
+          then \
+            # We only consider optional libraries when they are actually available
+            zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"`; \
             echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib"; \
             unzip -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
-            else \
-              echo "[INFO] No dependancies libs for $i ETS suite..."; \
-            fi \
+          else \
+            echo "[INFO] No dependancy libs for $i ETS suite..."; \
+          fi \
         fi \
       && cd ${TE_BUILD_DIR} \
       && if [ "$i" = "$(ls . | grep ets | tail -1)" ] ; then break; fi; \

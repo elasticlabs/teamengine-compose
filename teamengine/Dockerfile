@@ -91,7 +91,12 @@ RUN rm -rf ets-* \
     && git stash && git checkout $tag \
     && mvn clean package -DskipTests=true \
     && cd .. \
-    && [ "$i" == "$last" ] && break || echo "[INFO] Finished building of $i"; \
+    && if "$i" == "$last"; \
+      then \
+        break; \
+      else \
+        echo "[INFO] Finished building of $i"; \
+      fi; \
   done
 
 WORKDIR ${TE_BUILD_DIR}

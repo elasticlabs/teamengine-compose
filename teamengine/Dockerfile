@@ -92,17 +92,18 @@ RUN rm -rf ets-* \
     && if [ "$i" = "$(more $ETS_FILE | tail -1)" ] ; then break; else echo "[INFO] Finished building $i"; fi;\
   done
 
+# After cloning & building, we simply dispatch generated zip into appropriate directories
+# ... Then do a little cleanup
 WORKDIR ${TE_BUILD_DIR}
-RUN last_item=`ls . | grep ets | tail -1 ` \
-  && for i in `ls . | grep ets`; do \
-    echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
-    && zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"` \
-    && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
-    && zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"` \
-    && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
-    && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
-    && if "$i" == "$last_item"; then break; else cd ${TE_BUILD_DIR}; fi; \
-    # A REPARER!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  done 
+RUN for i in `ls . | grep ets`; do \
+      echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
+      && zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"` \
+      && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
+      && zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"` \
+      && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
+      && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
+      && cd ${TE_BUILD_DIR} \
+      && if [ "$i" = "$(ls . | grep ets | tail -1)" ] ; then break; fi; \
+    done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

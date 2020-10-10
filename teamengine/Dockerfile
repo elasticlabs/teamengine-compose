@@ -91,7 +91,7 @@ RUN rm -rf ets-* \
     && git stash && git checkout $tag \
     && mvn clean package -DskipTests=true \
     && cd .. \
-    && if "$i" == "$last"; \
+    && if "$i" = "$last"; \
       then \
         break; \
       else \

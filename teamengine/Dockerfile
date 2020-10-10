@@ -87,8 +87,8 @@ RUN rm -rf ets-* \
     && ets_pwd=`echo $ets | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
     # Build ETS
     && cd $ets_pwd \
-    && git stash && git checkout $tag \
-    && mvn clean package -DskipTests=true | grep INFO\
+    && git stash && git checkout $tag | grep HEAD\
+    && mvn clean package -DskipTests=true | grep ^\[ \
     && cd ..; \
   done
 

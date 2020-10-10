@@ -101,7 +101,7 @@ RUN for i in `ls . | grep ets`; do \
           unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts; \
           zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"`; \
           # We onlt consider optional libraries when they are actually available
-          if [[ $zip_dep_file == *"zip"* ]] ; then \
+          if [ $(echo $zip_dep_file | wc) -gt 0 ] ; then \
             echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib"; \
             unzip -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
             else \

@@ -93,7 +93,7 @@ RUN rm -rf ets-* \
   done
 
 WORKDIR ${TE_BUILD_DIR}
-RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
+RUN last_item=`ls . | grep ets | tail -1 ` \
   && for i in `ls . | grep ets`; do \
     echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
     && zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"` \

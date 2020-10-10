@@ -78,7 +78,6 @@ ENV ETS_FILE=te_repositories.csv
 
 RUN rm -rf ets-* \
   && for i in `more $ETS_FILE | grep github`; do \
-    # Get last item for triggering positive return code at the end of the loop
     ets=`echo $i | awk -F "," '{print $1}'` \
     && tag=`echo $i | awk -F "," '{print $2}'` \
     # Clone directory
@@ -88,8 +87,9 @@ RUN rm -rf ets-* \
     # Build ETS
     && cd $ets_pwd \
     && git stash && git checkout $tag \
-    && mvn clean package -DskipTests=true \
-    && cd ..; \
+    && mvn clean package -DskipTests=true | grep INFO|ERROR|WARNING \
+    && cd .. \
+    && if "$i" == "$(more $ETS_FILE | tail -1)"; then break; else echo "[INFO] Finished building $i"; \
   done
 
 WORKDIR ${TE_BUILD_DIR}
@@ -102,6 +102,7 @@ RUN last_item=`ls . | grep ets | tail -1 ` \
     && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
     && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
     && if "$i" == "$last_item"; then break; else cd ${TE_BUILD_DIR}; fi; \
+    # A REPARER!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

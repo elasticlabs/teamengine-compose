@@ -77,10 +77,12 @@ COPY conf/te_* ./
 ENV ETS_FILE=te_repositories.csv
 RUN for i in `more $ETS_FILE`; \
   do \
-    ets=`echo $i | awk -F "," '{print $1}'` \
+    # Get last item for triggering positive return code at the end of the loop
+    last= tail -1 $ETS_FILE \
+    $$ ets=`echo $i | awk -F "," '{print $1}'` \
     && tag=`echo $i | awk -F "," '{print $2}'` \
     # Clone directory
-    && echo "[INFO] Processing $url -> v$tag" \
+    && echo "[INFO] Processing $ets -> v$tag" \
     && git clone $ets \
     && ets_pwd=`echo $ets | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
     # Build ETS
@@ -100,9 +102,9 @@ RUN for i in `more $ETS_FILE`; \
     && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
     && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
     && wait 2 \
-    && cd ../.. ;\
+    && cd ../.. \
+    && [ $i == $last ] && break || echo "[INFO] Finished installation of $i"; \
   done
-
 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

@@ -75,6 +75,7 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 WORKDIR ${TE_BUILD_DIR}
 COPY conf/te_* ./
 ENV ETS_FILE=te_repositories.csv
+
 RUN rm -rf ets-* \
   && last=`tail -1 $ETS_FILE` \
   && for i in `more $ETS_FILE | grep github`; do \
@@ -89,7 +90,13 @@ RUN rm -rf ets-* \
     && cd $ets_pwd \
     && git stash && git checkout $tag \
     && mvn clean package -DskipTests=true \
-    && cd target \
+    && cd .. \
+    && [ "$i" == "$last" ] && break || echo "[INFO] Finished building of $i"; \
+  done
+
+WORKDIR ${TE_BUILD_DIR}
+RUN for i in `ls | grep ets`; do \
+    cd ${i}/target \
     # Clarify if ETS of CTL, then move files where they belong to
     #    - Copy CTL files to $TE_BASE/scripts
     #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
@@ -109,8 +116,7 @@ RUN rm -rf ets-* \
       fi \
     # Do some cleanup and get ready for next loop
     && cd ${TE_BUILD_DIR} && unset zip_dep_file && unset zip_ctl_file \
-    && [ $i == $last ] && break || echo "[INFO] Finished installation of $i"; \
-  done
-
+    && [ "$i" == "$last" ] && break || echo "[INFO] Finished installation of $i"; \
+  done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

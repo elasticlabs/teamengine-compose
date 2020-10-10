@@ -75,11 +75,10 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 WORKDIR ${TE_BUILD_DIR}
 COPY conf/te_* ./
 ENV ETS_FILE=te_repositories.csv
-RUN for i in `more $ETS_FILE`; \
-  do \
+RUN last=`tail -1 $ETS_FILE` \
+  && for i in `more $ETS_FILE`; do \
     # Get last item for triggering positive return code at the end of the loop
-    last=`tail -1 $ETS_FILE` \
-    $$ ets=`echo $i | awk -F "," '{print $1}'` \
+    ets=`echo $i | awk -F "," '{print $1}'` \
     && tag=`echo $i | awk -F "," '{print $2}'` \
     # Clone directory
     && echo "[INFO] Processing $ets -> v$tag" \

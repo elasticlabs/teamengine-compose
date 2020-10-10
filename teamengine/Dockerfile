@@ -93,7 +93,7 @@ RUN rm -rf ets-* \
   done
 
 WORKDIR ${TE_BUILD_DIR}
-RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
+RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'`; \
   && for i in `ls | grep ets`; do \
     # Clarify if ETS of CTL, then move files where they belong to
     #    - Copy CTL files to $TE_BASE/scripts

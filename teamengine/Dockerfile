@@ -94,12 +94,14 @@ RUN rm -rf ets-* \
     #    - Copy CTL files to $TE_BASE/scripts
     #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
     && zip_ctl_file=`ls *ctl.zip | grep -m 1 "ctl"` \
-    && zip_dep_file=`ls *deps.zip | grep -m 1 "deps"` \
+    && if ls *deps.zip 1> /dev/null 2>&1; then zip_dep_file=$(ls *deps.zip | grep -m 1 "deps"); fi \
     && [ -n $zip_ctl_file ] && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
     && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
-    && [ -n $zip_dep_file ] && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
-    && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
-    || wait 2 \
+    && if [ -n $zip_dep_file ]; \
+      then echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
+      && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
+      else echo "[INFO] No dependance librariesf found for package $ets"; \
+      fi; \
     && cd ../.. \
     && [ $i == $last ] && break || echo "[INFO] Finished installation of $i"; \
   done

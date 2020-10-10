@@ -75,8 +75,9 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 WORKDIR ${TE_BUILD_DIR}
 COPY conf/te_* ./
 ENV ETS_FILE=te_repositories.csv
-RUN last=`tail -1 $ETS_FILE` \
-  && for i in `more $ETS_FILE`; do \
+RUN rm -rf ets-* \
+  && last=`tail -1 $ETS_FILE` \
+  && for i in `more $ETS_FILE | grep github`; do \
     # Get last item for triggering positive return code at the end of the loop
     ets=`echo $i | awk -F "," '{print $1}'` \
     && tag=`echo $i | awk -F "," '{print $2}'` \

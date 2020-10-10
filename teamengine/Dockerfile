@@ -100,7 +100,7 @@ RUN for i in `more $ETS_FILE`; \
     && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
     && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
     && wait 2 \
-    && cd ../..; \
+    && cd ../.. \
   done
 
 

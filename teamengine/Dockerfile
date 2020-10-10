@@ -78,7 +78,7 @@ ENV ETS_FILE=te_repositories.csv
 RUN for i in `more $ETS_FILE`; \
   do \
     # Get last item for triggering positive return code at the end of the loop
-    last= tail -1 $ETS_FILE \
+    last=`tail -1 $ETS_FILE` \
     $$ ets=`echo $i | awk -F "," '{print $1}'` \
     && tag=`echo $i | awk -F "," '{print $2}'` \
     # Clone directory

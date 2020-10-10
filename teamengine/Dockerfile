@@ -89,7 +89,7 @@ RUN rm -rf ets-* \
     && git stash && git checkout $tag \
     && mvn clean package -DskipTests=true | grep INFO|ERROR|WARNING \
     && cd .. \
-    && if "$i" == "$(more $ETS_FILE | tail -1)"; then break; else echo "[INFO] Finished building $i"; \
+    && if "$i" == "$(more $ETS_FILE | tail -1)"; then break; else echo "[INFO] Finished building $i"; fi;\
   done
 
 WORKDIR ${TE_BUILD_DIR}

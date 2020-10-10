@@ -95,26 +95,14 @@ RUN rm -rf ets-* \
 WORKDIR ${TE_BUILD_DIR}
 RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
   && for i in `ls . | grep ets`; do \
-    # Clarify if ETS of CTL, then move files where they belong to
-    #    - Copy CTL files to $TE_BASE/scripts
-    #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
     zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"` \
-    && if ls ${i}/target/*.zip; \
-      then \
-        zip_dep_file=$(ls ${i}/target/*.zip | grep -m 1 "deps"); \
-      fi \
-    && [ -n $zip_ctl_file ] && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
+    && zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "deps"` \
+    && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
     && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
-    && if [ -n $zip_dep_file ]; \
-      then \
-        echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib"; \
-        unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
-      else \
-        echo "[INFO] No dependance libraries found for package $ets"; \
-      fi \
+    && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
+    && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
     # Do some cleanup and get ready for next loop
-    && cd ${TE_BUILD_DIR} && unset zip_dep_file && unset zip_ctl_file \
-    && [[ "$i" == "$last_item" ]] && break || echo "[INFO] Finished installation of $i"; \
+    && cd ${TE_BUILD_DIR}; \
   done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

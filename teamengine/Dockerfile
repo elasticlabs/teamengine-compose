@@ -101,8 +101,7 @@ RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print 
     && zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"` \
     && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
     && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
-    # Do some cleanup and get ready for next loop
-    && cd ${TE_BUILD_DIR}; \
+    && [[ "$i" == "$last_item" ]] && break || cd ${TE_BUILD_DIR}; \
   done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

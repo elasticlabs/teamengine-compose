@@ -91,12 +91,6 @@ RUN rm -rf ets-* \
     && git stash && git checkout $tag \
     && mvn clean package -DskipTests=true \
     && cd .. \
-    && if "$last" = "$ets_pwd"; \
-      then \
-        break; \
-      else \
-        echo "[INFO] Finished building of $i"; \
-      fi; \
   done
 
 WORKDIR ${TE_BUILD_DIR}

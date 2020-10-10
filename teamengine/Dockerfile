@@ -98,9 +98,11 @@ RUN rm -rf ets-* \
     && [ -n $zip_ctl_file ] && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
     && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
     && if [ -n $zip_dep_file ]; \
-      then echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
-      && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
-      else echo "[INFO] No dependance librariesf found for package $ets"; \
+      then \
+        echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib"; \
+        unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
+      else \
+        echo "[INFO] No dependance libraries found for package $ets"; \
       fi \
     && cd ../.. \
     && [ $i == $last ] && break || echo "[INFO] Finished installation of $i"; \

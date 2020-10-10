@@ -98,10 +98,10 @@ RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print 
     # Clarify if ETS of CTL, then move files where they belong to
     #    - Copy CTL files to $TE_BASE/scripts
     #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
-    zip_ctl_file=`ls ${i}/target/*ctl.zip | grep -m 1 "ctl"` \
-    && if ls ${i}/target/*deps.zip; \
+    zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"` \
+    && if ls ${i}/target/*.zip; \
       then \
-        zip_dep_file=$(ls ${i}/target/*deps.zip | grep -m 1 "deps"); \
+        zip_dep_file=$(ls ${i}/target/*.zip | grep -m 1 "deps"); \
       fi \
     && [ -n $zip_ctl_file ] && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
     && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \

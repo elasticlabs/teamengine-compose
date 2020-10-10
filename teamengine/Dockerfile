@@ -87,7 +87,7 @@ RUN rm -rf ets-* \
     # Build ETS
     && cd $ets_pwd \
     && git stash && git checkout $tag \
-    && mvn clean package -DskipTests=true | grep 'INFO|ERROR|WARNING' \
+    && mvn clean package -DskipTests=true \
     && cd .. \
     && if "$i" == "$(more $ETS_FILE | tail -1)"; then break; else echo "[INFO] Finished building $i"; fi;\
   done

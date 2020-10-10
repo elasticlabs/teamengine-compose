@@ -100,8 +100,7 @@ RUN rm -rf ets-* \
       fi \
     && [ -n $zip_ctl_file ] && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
     && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
-    && echo $zip_dep_file \
-    && if [ -n $zip_dep_file ]; \
+    && if [ -v $zip_dep_file ]; \
       then \
         echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib"; \
         unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
@@ -109,7 +108,7 @@ RUN rm -rf ets-* \
         echo "[INFO] No dependance libraries found for package $ets"; \
       fi \
     # Do some cleanup and get ready for next loop
-    && cd ../.. && unset zip_dep_file && unset zip_ctl_file \
+    && cd ${TE_BUILD_DIR} && unset zip_dep_file && unset zip_ctl_file \
     && [ $i == $last ] && break || echo "[INFO] Finished installation of $i"; \
   done
 

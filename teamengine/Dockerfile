@@ -88,7 +88,7 @@ RUN rm -rf ets-* \
     # Build ETS
     && cd $ets_pwd \
     && git stash && git checkout $tag \
-    && mvn clean package -DskipTests=true \
+    && mvn clean package -DskipTests=true | grep INFO\
     && cd ..; \
   done
 
@@ -98,6 +98,7 @@ RUN for i in `ls | grep ets`; do \
     # Clarify if ETS of CTL, then move files where they belong to
     #    - Copy CTL files to $TE_BASE/scripts
     #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
+    #  last=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'` 
     && zip_ctl_file=`ls *ctl.zip | grep -m 1 "ctl"` \
     && if ls *deps.zip 1> /dev/null 2>&1; \
       then \

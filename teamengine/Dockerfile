@@ -101,7 +101,7 @@ RUN rm -rf ets-* \
       then echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
       && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
       else echo "[INFO] No dependance librariesf found for package $ets"; \
-      fi; \
+      fi \
     && cd ../.. \
     && [ $i == $last ] && break || echo "[INFO] Finished installation of $i"; \
   done

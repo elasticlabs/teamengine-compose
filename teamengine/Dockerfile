@@ -93,8 +93,7 @@ RUN rm -rf ets-* \
   done
 
 WORKDIR ${TE_BUILD_DIR}
-RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print $NF}' | sed 's/\.git//'`; \
-  && for i in `ls | grep ets`; do \
+RUN for i in `ls | grep ets`; do \
     # Clarify if ETS of CTL, then move files where they belong to
     #    - Copy CTL files to $TE_BASE/scripts
     #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
@@ -114,7 +113,7 @@ RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print 
       fi \
     # Do some cleanup and get ready for next loop
     && cd ${TE_BUILD_DIR} && unset zip_dep_file && unset zip_ctl_file \
-    && [[ "$i" == "$last_item" ]] && break || echo "[INFO] Finished installation of $i"; \
+    && echo "[INFO] Finished installation of $i"; \
   done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

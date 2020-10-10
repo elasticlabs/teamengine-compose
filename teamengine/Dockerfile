@@ -104,7 +104,7 @@ RUN for i in `ls . | grep ets`; do \
             # We only consider optional libraries when they are actually available
             zip_dep_file=`ls ${i}/target/*.zip | grep -m 1 "dep"`; \
             echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib"; \
-            unzip -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
+            unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \
           else \
             echo "[INFO] No dependancy libs for $i ETS suite..."; \
           fi \

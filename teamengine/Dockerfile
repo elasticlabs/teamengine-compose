@@ -105,7 +105,7 @@ RUN last_item=`tail -1 $ETS_FILE | awk -F "," '{print $1}' | awk -F "/" '{print 
       fi \
     && [ -n $zip_ctl_file ] && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
     && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
-    && if [ -v $zip_dep_file ]; \
+    && if [ -n $zip_dep_file ]; \
       then \
         echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib"; \
         unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib; \

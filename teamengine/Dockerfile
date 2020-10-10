@@ -73,7 +73,7 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 #       - CSV list as input (see https://github.com/opengeospatial/teamengine-builder/)
 #       - Basic shell script for ETS gather/build/deploy
 WORKDIR ${TE_BUILD_DIR}
-COPY conf/te_* .
+COPY conf/te_* ./
 RUN chmod 755 ./te_* \
   && ./te_build_tests.sh
 

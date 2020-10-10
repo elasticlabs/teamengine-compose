@@ -50,11 +50,12 @@ RUN mkdir -p ${TE_WEBAPP} \
 RUN mkdir -p ${TE_WEBAPP}/TE_BASE \
     && mkdir -p ${TE_WEBAPP}/TE_BASE/utils \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-base.zip -d ${TE_WEBAPP}/TE_BASE/ \
-    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/  \
-    && export CATALINA_BASE=${TE_WEBAPP} \
-    && export TE_WEB_BASE=${TE_WEBAPP}/webapps/app \
-    && export TE_BASE=${TE_WEBAPP}/TE_BASE \
-    && export CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE -Dderby.system.home=${TE_WEBAPP}/derby_data"
+    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/ 
+
+ENV CATALINA_BASE=${TE_WEBAPP}
+ENV TE_WEB_BASE=${TE_WEBAPP}/webapps/app
+ENV TE_BASE=${TE_WEBAPP}/TE_BASE
+ENV CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE -Dderby.system.home=${TE_WEBAPP}/derby_data"
 
 #
 # Step (3/ ) -> Copy :
@@ -73,7 +74,36 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 #       - Basic shell script for ETS gather/build/deploy
 WORKDIR ${TE_BUILD_DIR}
 COPY conf/te_* ./
-RUN chmod 755 ./te_* \
-  && ./te_build_tests.sh
+ENV ETS_FILE=te_repositories.csv
+RUN for i in `more $ETS_FILE`; \
+  do; \
+    ets=`echo $i | awk -F "," '{print $1}'` \
+    && tag=`echo $i | awk -F "," '{print $2}'` \
+    # Clone directory
+    && echo "[INFO] Processing $url -> v$tag" \
+    && git clone $ets \
+    && ets_pwd=`echo $ets | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
+    # Build ETS
+    && cd $ets_pwd \
+    && git stash && git checkout $tag \
+    && mvn clean package -DskipTests=true \
+    && cd target \
+    # Clarify if ETS of CTL, then move files where they belong to
+    #    - Copy CTL files to $TE_BASE/scripts
+    #    - If dependency libraries exist, then copy them to $TE_WEB_BASE/WEB-INF/lib
+    && zip_ctl_file=`ls *ctl.zip | grep -m 1 "ctl"` \
+    && zip_dep_file=`ls *deps.zip | grep -m 1 "deps"` \
+    && [ -n $zip_dep_file ] \
+    && echo "[INFO] Installing $zip_ctl_file at $TE_BASE/scripts" \
+    && unzip -q -o $zip_ctl_file -d ${TE_BASE}/scripts \
+    && [ -n "$zip_dep_file" ] \
+    && echo "[INFO] Installing $zip_dep_file at ${TE_WEB_BASE}/WEB-INF/lib" \
+    && unzip -q -o $zip_dep_file -d ${TE_WEB_BASE}/WEB-INF/lib \
+    && wait 2
+
+    cd ../..
+  done
+
+
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

@@ -85,10 +85,8 @@ RUN rm -rf ets-* \
     && git clone $ets \
     && ets_pwd=`echo $ets | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
     # Build ETS
-    && cd $ets_pwd \
-    && git stash && git checkout $tag \
-    && mvn clean package -DskipTests=true \
-    && cd .. \
+    && git stash $ets_pwd && git checkout $tag $ets_pwd \
+    && mvn -q clean package -f $ets_pwd/pom.xml -DskipTests=true \
     && if [ "$i" = "$(more $ETS_FILE | tail -1)" ] ; then break; else echo "[INFO] Finished building $i"; fi;\
   done
 

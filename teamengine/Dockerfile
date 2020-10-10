@@ -50,12 +50,11 @@ RUN mkdir -p ${TE_WEBAPP} \
 RUN mkdir -p ${TE_WEBAPP}/TE_BASE \
     && mkdir -p ${TE_WEBAPP}/TE_BASE/utils \
     && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-base.zip -d ${TE_WEBAPP}/TE_BASE/ \
-    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/ 
-
-ENV CATALINA_BASE=${TE_WEBAPP}
-ENV TE_WEB_BASE=${TE_WEBAPP}/webapps/app
-ENV TE_BASE=${TE_WEBAPP}/TE_BASE
-ENV CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE -Dderby.system.home=${TE_WEBAPP}/derby_data"
+    && unzip -e ${TE_BUILD_DIR}/teamengine/teamengine-console/target/teamengine-console-${TE_VERSION}-bin.zip -d ${TE_WEBAPP}/TE_BASE/utils/  \
+    && export CATALINA_BASE=${TE_WEBAPP} \
+    && export TE_WEB_BASE=${TE_WEBAPP}/webapps/app \
+    && export TE_BASE=${TE_WEBAPP}/TE_BASE \
+    && export CATALINA_OPTS="-server -Xmx1024m -DTE_BASE=$TE_BASE -Dderby.system.home=${TE_WEBAPP}/derby_data"
 
 #
 # Step (3/ ) -> Copy :

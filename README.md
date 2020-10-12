@@ -22,6 +22,7 @@ For information on available **Test Suites & leads**, head to `https://github.co
 * Build the application using `sudo make build && sudo make proxy-up && sudo make wait && sudo make up`
 * or.... `make proxy-up && make up`
 * or.... `make build` to get confident, the `make up` and `make clean`
+* Then, head to **`http://your-awesome-domain.ltd/app`** and enjoy TEAMENgine test suites!
 
 #### Basic admin commands
 * `make proxy-up` -> Initialize front proxy entrypoint

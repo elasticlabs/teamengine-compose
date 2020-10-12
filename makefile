@@ -16,35 +16,37 @@ help:
 	@echo " "
 	@echo "Hints for developers:"
 	@echo "  make proxy-up               # Initialize front proxy entrypoint"
-	@echo "  make build-ets              # Build OGC Web services ETS"
 	@echo "  make build                  # Makes container & volumes cleanup, and builds TEAMEngine"
 	@echo "  make up                     # With working proxy, brings up the testing infrastructure"
 	@echo "  make update                 # Update the whole stack"
+	@echo "  make clean                  # Do some cleanup"
 	@echo "=============================================================================="
 
 .PHONY: proxy-up
 proxy-up:
+    git stash && git pull
 	chmod 755 proxy-toolkit/uploadsize.conf
 	docker-compose -f docker-compose.proxy.yml up -d --build --remove-orphans portainer 
 
 .PHONY: up
 up:
-	#docker-compose up -d --remove-orphans teamengine
-    git pull
-	docker-compose -f docker-compose.yml up -d portainer
-
-.PHONY: build-ets
-build:
-	# Maven build ETS test suites
+    git stash && git pull
+	docker-compose -f docker-compose.yml up -d --build --remove-orphans
 
 .PHONY: build
 build:
-	# Maven build TEAMEngine
 	docker-compose -f docker-compose.yml --build teamengine
-
+ 
 .PHONY: update
-update: pull up wait
+update: 
+	docker-compose -f docker-compose.yml pull 
+	docker-compose -f docker-compose.yml up -d --build teamengine 	
+
+.PHONY: clean
+clean
 	docker image prune
+	docker container prune
+	docker volume prune
 
 .PHONY: wait
 wait: 

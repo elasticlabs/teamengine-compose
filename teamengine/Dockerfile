@@ -71,11 +71,11 @@ COPY conf/site/* ${TE_WEBAPP}/TE_BASE/resources/site/
 #
 # Step (4/ ) -> ETS deployment :
 #       - CSV list as input (see https://github.com/opengeospatial/teamengine-builder/)
-#       - Basic shell script for ETS gather/build/deploy
 WORKDIR ${TE_BUILD_DIR}
 COPY conf/te_* ./
 ENV ETS_FILE=te_repositories.csv
 
+# We start by cloning & building suites
 RUN rm -rf ets-* \
   && for i in `more $ETS_FILE | grep github`; do \
     ets=`echo $i | awk -F "," '{print $1}'` \
@@ -87,13 +87,19 @@ RUN rm -rf ets-* \
     # Build ETS
     && git -C ${ets_pwd} stash && git -C ${ets_pwd} checkout $tag \
     && mvn clean package -f $ets_pwd/pom.xml -DskipTests=true \
-    && if [ "$i" = "$(more $ETS_FILE | tail -1)" ] ; then break; else echo "[INFO] Finished building $i"; fi;\
+    # Required for positive exit code; clean break after end of loop 
+    && if [ "$i" = "$(more $ETS_FILE | tail -1)" ] ; \ 
+      then break; \
+      else \
+        echo "[INFO] Finished building $i"; \
+      fi; \
   done
 
 # After cloning & building, we simply dispatch generated zip into appropriate directories
 # ... Then do a little cleanup
 WORKDIR ${TE_BUILD_DIR}
 RUN for i in `ls . | grep ets`; do \
+      # We check that .zip files actually exist before working on them
       if [ $(ls ${i}/target | grep zip | wc -l) -gt 0 ] ; \
         then \
           zip_ctl_file=`ls ${i}/target/*.zip | grep -m 1 "ctl"`; \
@@ -110,7 +116,10 @@ RUN for i in `ls . | grep ets`; do \
           fi \
         fi \
       && cd ${TE_BUILD_DIR} \
-      && if [ "$i" = "$(ls . | grep ets | tail -1)" ] ; then break; fi; \
+      # Required for positive exit code; clean break after end of loop 
+      && if [ "$i" = "$(ls . | grep ets | tail -1)" ] ; \
+        then break; \
+      fi; \
     done 
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

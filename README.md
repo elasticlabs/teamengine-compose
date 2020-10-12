@@ -4,6 +4,8 @@ OGC TEAMEngine docker-compose automated deployment
 Get an automated TEAMEngine with most common test suites up and running in minutes without headache!
 **TODO** : finalize HTTPS proxy 
 
+For information on available **Test Suites & leads**, head to `https://github.com/opengeospatial/cite/wiki/Overview-of-Test-Suites-and-Test-Leads`
+
 #### Preparation :
 * Install utility tools: `# yum install git nano make htop elinks wget tshark nano tree`
 * Avoid `sudo`issues by adding your current username to the `docker` group: `# sudo groupadd docker && sudo usermod -aG docker <usename> && sudo systemctl restart docker`

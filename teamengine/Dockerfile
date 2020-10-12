@@ -120,6 +120,9 @@ RUN for i in `ls . | grep ets`; do \
       && if [ "$i" = "$(ls . | grep ets | tail -1)" ] ; \
         then break; \
       fi; \
-    done 
+    done \
+    # Finally, do some cleanup
+    && rm -rf ${TE_BUILD_DIR}/*
+
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

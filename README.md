@@ -3,8 +3,6 @@ OGC TEAMEngine docker-compose automated deployment
 
 Get an automated TEAMEngine with most common test suites up and running in minutes without headache!
 
-**TODO** : finalize HTTPS proxy 
-
 For information on available **Test Suites & leads**, head to `https://github.com/opengeospatial/cite/wiki/Overview-of-Test-Suites-and-Test-Leads`
 
 #### Preparation :
@@ -25,7 +23,7 @@ For information on available **Test Suites & leads**, head to `https://github.co
 * Then, head to **`http://your-awesome-domain.ltd/app`** and enjoy TEAMENgine test suites!
 
 #### Basic admin commands
-* `make proxy-up` -> Initialize front proxy entrypoint
+* TODO `make proxy-up` -> Initialize front proxy entrypoint
 * `make up` ->  With working proxy, brings up the SDI
 * `make build` -> Checks needs for ETS suites creation & Build TEAMEngine
 * `make update` -> Update the whole stack

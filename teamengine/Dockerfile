@@ -14,7 +14,7 @@ WORKDIR ${TE_BUILD_DIR}
 # Supplementary packages deployment
 RUN set -eux \
     && apt-get update \
-	&& apt-get install -y --no-install-recommends \
+  	&& apt-get install -y --no-install-recommends \
 		git unzip tree maven \
     # Clone TEAMEngine repository
     && git clone https://github.com/opengeospatial/teamengine.git \

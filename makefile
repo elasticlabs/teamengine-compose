@@ -15,18 +15,11 @@ help:
 	@echo " Geospatial Metadata Catalogue complete SDI  https://github.com/elasticlabs/teamengine-compose "
 	@echo " "
 	@echo "Hints for developers:"
-	@echo "  make proxy-up               # Initialize front proxy entrypoint"
 	@echo "  make build                  # Makes container & volumes cleanup, and builds TEAMEngine"
 	@echo "  make up                     # With working proxy, brings up the testing infrastructure"
 	@echo "  make update                 # Update the whole stack"
 	@echo "  make clean                  # Do some cleanup"
 	@echo "=============================================================================="
-
-.PHONY: proxy-up
-proxy-up:
-    git stash && git pull
-	chmod 755 proxy-toolkit/uploadsize.conf
-	docker-compose -f docker-compose.proxy.yml up -d --build --remove-orphans portainer 
 
 .PHONY: up
 up:

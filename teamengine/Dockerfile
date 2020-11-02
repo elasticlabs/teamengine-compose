@@ -124,5 +124,4 @@ RUN for i in `ls . | grep ets`; do \
     # Finally, do some cleanup
     && rm -rf ${TE_BUILD_DIR}/*
 
-
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

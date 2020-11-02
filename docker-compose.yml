@@ -3,6 +3,26 @@ version: '3'
 services:
   #
   # Applications
+  te-proxy:
+    image: ${COMPOSE_PROJECT_NAME}_te-proxy:latest
+    container_name: te-proxy4${COMPOSE_PROJECT_NAME}
+    restart: unless-stopped
+    expose:
+      - "80"
+    build:
+      context: ./proxy
+    environment:
+      - DHPARAM_GENERATION=false
+      - VIRTUAL_HOST=teamengine.elasticlabs.co
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=teamengine.elasticlabs.co
+      - LETSENCRYPT_EMAIL=patrice.mauny@gmail.com
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - te-proxy
+      - teamengine
+  
   teamengine:
     build:
       context: ./teamengine
@@ -18,15 +38,10 @@ services:
       - "8080"
     environment: 
       - DHPARAM_GENERATION=false
-      - VIRTUAL_HOST=teamengine.elasticlabs.co
-      - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=teamengine.elasticlabs.co
-      - LETSENCRYPT_EMAIL=patrice.mauny@gmail.com
     volumes:
       - te-webapp:${TE_WEBAPP}
-      - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
-      - apps
+      - teamengine
 
 volumes:
   te-base:
@@ -34,4 +49,4 @@ volumes:
   te-webapp:
 
 networks:
-  apps:
+  teamengine:

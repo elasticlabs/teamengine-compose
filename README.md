@@ -15,6 +15,7 @@ For information on available **Test Suites & leads**, head to `https://github.co
 * Choose & configure a selected DNS name (e.g. `teamengine.your-awesome-domain.ltd`). Make sure it properly resolves from your server using `nslookup`commands
 * Modify `docker-compose.yml` and `docker-compose.proxy.yml` in order to setup the `VIRTUAL_HOST` parameter to match your choosen DNS TEAMEngine record
 
+
 #### Repository clone & application build
 * Clone this repository and go to the `teamengine-compose` directory.
 * Build the application using `sudo make build && sudo make proxy-up && sudo make wait && sudo make up`

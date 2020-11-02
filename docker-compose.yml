@@ -49,4 +49,7 @@ volumes:
   te-webapp:
 
 networks:
+  te-proxy:
+    external:
+      name: te-proxy
   teamengine:

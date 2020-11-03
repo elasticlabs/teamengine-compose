@@ -26,7 +26,7 @@ Tis software stack relies on an automated NTTPS Nginx reverse proxy
 * Build the application using `sudo make build && sudo make proxy-up && sudo make wait && sudo make up`
 * or.... `make proxy-up && make up`
 * or.... `make build` to get confident, the `make up` and `make clean`
-* Then, head to **`http://your-awesome-domain.ltd/app`** and enjoy TEAMENgine test suites!
+* Then, head to **`http://teamengine.your-awesome-domain.ltd/app`** and enjoy TEAMENgine test suites!
 
 #### Basic admin commands
 * `make up` ->  With working proxy, brings up the SDI

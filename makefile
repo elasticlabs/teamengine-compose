@@ -8,7 +8,7 @@ SHELL         = /bin/bash
 # For cleanup, get Compose project name from .env file
 DC_PROJECT?=$(shell cat .env | sed 's/^*=//')
 
-# Every command is a PHONY, to avoid file naming confliction -> strengh comes from good habits!
+# Every command is a PHONY, to avoid file naming confliction.
 .PHONY: help
 help:
 	@echo "=============================================================================="

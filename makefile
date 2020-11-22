@@ -12,13 +12,14 @@ DC_PROJECT?=$(shell cat .env | sed 's/^*=//')
 .PHONY: help
 help:
 	@echo "=============================================================================="
-	@echo " Geospatial Metadata Catalogue complete SDI  https://github.com/elasticlabs/teamengine-compose "
+	@echo "              TEAMEngine OGC Web services test orchetration "
+	@echo "            https://github.com/elasticlabs/teamengine-compose "
 	@echo " "
 	@echo "Hints for developers:"
-	@echo "  make build                  # Makes container & volumes cleanup, and builds TEAMEngine"
-	@echo "  make up                     # With working proxy, brings up the testing infrastructure"
-	@echo "  make update                 # Update the whole stack"
-	@echo "  make clean                  # Do some cleanup"
+	@echo "  make build       # Makes container & volumes cleanup, and builds TEAMEngine"
+	@echo "  make up          # With working proxy, brings up the testing infrastructure"
+	@echo "  make update      # Update the whole stack"
+	@echo "  make clean       # Do some cleanup"
 	@echo "=============================================================================="
 
 .PHONY: up
@@ -37,9 +38,21 @@ update:
 
 .PHONY: clean
 clean
-	docker image prune
-	docker container prune
-	docker volume prune
+	@echo "[INFO] Bringing done the TEAMEngine stack"
+	docker-compose -f docker-compose.yml down --remove-orphans
+	# 2nd : clean up all containers & images, without deleting static volumes
+    @echo "[INFO] Cleaning up containers & images"
+	docker rm $(docker ps -a -q)
+	docker rmi $(docker images -q)
+	docker system prune -a
+    # Delete all hosted persistent data available in volumes
+	@echo "[INFO] Cleaning up static volumes"
+    docker volume rm -f $(DC_PROJECT)te-base
+    docker volume rm -f $(DC_PROJECT)te-data
+    docker volume rm -f $(DC_PROJECT)te-webapp
+	# Remove all dangling docker volumes
+	@echo "[INFO] Remove all dangling docker volumes"
+	docker volume rm $(shell docker volume ls -qf dangling=true)
 
 .PHONY: wait
 wait: 

@@ -19,7 +19,7 @@ help:
 	@echo "  make build       # Makes container & volumes cleanup, and builds TEAMEngine"
 	@echo "  make up          # With working proxy, brings up the testing infrastructure"
 	@echo "  make update      # Update the whole stack"
-	@echo "  make clean       # Do some cleanup"
+	@echo "  make cleanup       # Hard cleanup of images, containers, networks, volumes & data""
 	@echo "=============================================================================="
 
 .PHONY: up
@@ -36,8 +36,8 @@ update:
 	docker-compose -f docker-compose.yml pull 
 	docker-compose -f docker-compose.yml up -d --build teamengine 	
 
-.PHONY: clean
-clean
+.PHONY: cleanup
+cleanup
 	@echo "[INFO] Bringing done the TEAMEngine stack"
 	docker-compose -f docker-compose.yml down --remove-orphans
 	# 2nd : clean up all containers & images, without deleting static volumes

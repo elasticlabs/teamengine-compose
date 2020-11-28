@@ -1,6 +1,6 @@
 #
 # (group 1) Put below suites that are required as parent in local maven repository for group 2
-https://github.com/elasticlabs/ets-dgiwg-core.git,0.4
+https://github.com/elasticlabs/ets-dgiwg-core.git,master
 https://github.com/opengeospatial/ets-wfs20.git,1.34
 #
 # (main suites)
@@ -17,5 +17,5 @@ https://github.com/opengeospatial/ets-geotiff11.git,0.1
 https://github.com/opengeospatial/ets-cdb10.git,0.4
 #
 # (group 2) Put below all suites that need one of the above to be available in image local maven repository.
-https://github.com/elasticlabs/ets-wfs20-dgiwg.git,0.4
+https://github.com/elasticlabs/ets-wfs20-dgiwg.git,master
 https://github.com/opengeospatial/ets-wms13-dgiwg.git,0.4

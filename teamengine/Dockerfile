@@ -27,7 +27,7 @@ RUN git config --global user.email ${GIT_MAIL}\
     && git config --global user.name ${GIT_NAME} \
     && git stash \
     && git checkout ${TE_VERSION} \
-    && mvn package -DskipTests=true
+    && mvn install -DskipTests=true
 #
 # Step (1/ ) -> Web application & Common libs
 # Base directory (teamengine.war and teamengine-common-libs.zip)
@@ -86,7 +86,7 @@ RUN rm -rf ets-* \
     && ets_pwd=`echo $ets | awk -F "/" '{print $NF}' | sed 's/\.git//'` \
     # Build ETS
     && git -C ${ets_pwd} stash && git -C ${ets_pwd} checkout $tag \
-    && mvn clean package -f $ets_pwd/pom.xml -DskipTests=true \
+    && mvn clean install -f $ets_pwd/pom.xml -DskipTests=true \
     # Required for positive exit code; clean break after end of loop 
     && if [ "$i" = "$(more $ETS_FILE | tail -1)" ] ; \ 
       then break; \
@@ -122,6 +122,7 @@ RUN for i in `ls . | grep ets`; do \
       fi; \
     done \
     # Finally, do some cleanup
-    && rm -rf ${TE_BUILD_DIR}/*
+    && rm -rf ${TE_BUILD_DIR}/* \
+    && rm -rf /root/.m2/repository/org/opengis/cite/ets-*
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

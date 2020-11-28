@@ -122,7 +122,7 @@ RUN for i in `ls . | grep ets`; do \
       fi; \
     done \
     # Finally, do some cleanup
-    && rm -rf ${TE_BUILD_DIR}/* \
-    && rm -rf /root/.m2/repository/org/opengis/cite/ets-*
+    && rm -rf ${TE_BUILD_DIR}/*
+    # && rm -rf /root/.m2/repository/org/opengis/cite/ets-*
 
 CMD ["/usr/local/teamengine/bin/catalina.sh", "run"]

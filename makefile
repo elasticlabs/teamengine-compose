@@ -19,11 +19,11 @@ help:
 	@echo "  make build         # Makes container & volumes cleanup, and builds TEAMEngine"
 	@echo "  make up            # With working proxy, brings up the testing infrastructure"
 	@echo "  make update        # Update the whole stack"
-	@echo "  make hard-cleanup       # Hard cleanup of images, containers, networks, volumes & data"
+	@echo "  make hard-cleanup  # Hard cleanup of images, containers, networks, volumes & data"
 	@echo "==================================================================================="
 
 .PHONY: up
-up:
+up: 
     git stash && git pull
 	docker-compose -f docker-compose.yml up -d --build --remove-orphans
 

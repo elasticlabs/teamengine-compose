@@ -1,4 +1,4 @@
-[<img src="https://raw.githubusercontent.com/elasticlabs/teamengine-compose/main/certification-logo.gif" align="right">](https://cite.opengeospatial.org/teamengine/)
+[<img src="https://raw.githubusercontent.com/elasticlabs/teamengine-compose/main/certification-logo.gif" align="right" width="250px">](https://cite.opengeospatial.org/teamengine/)
 # TEAMEngine docker composition suite
 OGC TEAMEngine docker-compose automated deployment, including most common test suites up and running in minutes!
 

@@ -13,14 +13,14 @@ services:
       context: ./proxy
     environment:
       - DHPARAM_GENERATION=false
-      - VIRTUAL_HOST=teamengine.elasticlabs.co
       - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=teamengine.elasticlabs.co
-      - LETSENCRYPT_EMAIL=patrice.mauny@gmail.com
+      - VIRTUAL_HOST=${TE_VHOST}
+      - LETSENCRYPT_HOST=${TE_VHOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
-      - te-proxy
+      - https-revproxy
       - teamengine
   
   teamengine:
@@ -44,12 +44,10 @@ services:
       - teamengine
 
 volumes:
-  te-base:
-  te-data:
   te-webapp:
 
 networks:
-  te-proxy:
+  https-revproxy:
     external:
-      name: te-proxy
+      name: ${APPS_NETWORK}
   teamengine:

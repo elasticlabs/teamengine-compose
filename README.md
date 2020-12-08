@@ -1,27 +1,38 @@
+[<img src="https://raw.githubusercontent.com/elasticlabs/teamengine-compose/main/certification-logo.gif" align="right">](https://cite.opengeospatial.org/teamengine/)
 # TEAMEngine docker composition suite
 OGC TEAMEngine docker-compose automated deployment, including most common test suites up and running in minutes!
 
-## Docker environment preparation 
-* Install utility tools: `# yum install git nano make htop elinks wget tshark nano tree`
-* Avoid `sudo`issues by adding your current username to the `docker` group: `# sudo groupadd docker && sudo usermod -aG docker <usename> && sudo systemctl restart docker`
-* Avoid docker-compose issues with sudo by adding `/usr/local/lib`to the PATH `secure_path variable`
-* Install the [latest version of docker-compose](https://docs.docker.com/compose/install/)
-* This software stack relies on an automated NTTPS Nginx reverse proxy. Please refer to [our Elasticlabs official Let'sencrypt HTTPS repository](https://github.com/elasticlabs/https-nginx-proxy-docker-compose) for how to setup your own + Clean portainer admin dashboard for your containers.
 
-#### TEAMEngine deployment preparation :
-* Choose & configure a selected DNS name (e.g. `teamengine.your-awesome-domain.ltd`). Make sure it properly resolves from your server using `nslookup`commands
+**Table Of Contents:**
+  - [Docker environment preparation](#docker-environment-preparation)
+  - [TEAMEngine deployment preparation](#teamengine-deployment-preparation)
+  - [Stack deployment and management](#stack-deployment-and-management)
+
+----
+
+## Docker environment preparation 
+This stack is meant to be deployed behind an automated NGINX based HTTPS proxy. The recommanded automated HTTPS proxy for this stack is the [Elasticlabs HTTPS Nginx Proxy](https://github.com/elasticlabs/teamengine-compose). This composition repository assumes you have this environment :
+* Working HTTPS Nginx proxy using Let'sencrypt certificates
+* A local docker LAN network called `revproxy_apps` for hosting your *bubble apps* (Nginx entrypoint for each *bubble*). 
+
+**Once you have a HTTPS reverse proxy**, navigate to the  [next](#teamengine-deployment-preparation) section.
+
+
+## TEAMEngine deployment preparation :
+* Choose & register a DNS name (e.g. `teamengine.your-awesome-domain.ltd`). Make sure it properly resolves from your server using `nslookup`commands.
 * Carefully create / choose an appropriate directory to group your applications GIT reposities (e.g. `~/AppContainers/`)
 * GIT clone this repository `git clone https://github.com/elasticlabs/teamengine-compose.git`
-* Modify `docker-compose.yml` in order to setup the `VIRTUAL_HOST` parameter to match your choosen DNS TEAMEngine record
-* Create the `te-proxy` network -> `sudo docker network create te-proxy`
-* Attach the new network to the existing `nginx-proxy` container to ensure proper proxy operations -> `sudo docker network connect te-proxy <nginx-proxy container name>`
+* Modify the following variables in `.env` file :
+  * `TE_VHOST=` : replace `teamengine.your-domain.ltd` with your choosen subdomain for portainer.
+  * `LETSENCRYPT_EMAIL=` : replace `email@mail-provider.ltd` with the email address to get notifications on Certificates issues for your domain. 
 
-#### Build and run the TEAMEngine application
-* Build the application using `sudo make build` to get confident, the `make up`
+## Stack deployment and management
+**Deployment**
+* Get help : `sudo make help`
+* Bring up the whole stack : `sudo make build && sudo make up`
 * Head to **`http://teamengine.your-awesome-domain.ltd/app`** and enjoy TEAMENgine test suites!
 
-#### Basic admin commands
-* `make up` ->  With working proxy, brings up the SDI
-* `make build` -> Checks needs for ETS suites creation & Build TEAMEngine
-* `make update` -> Update the whole stack
-* `make clean` -> Do some Docker cleanup within containers, images, and volumes
+**Useful management commands**
+* Go inside a container : `sudo docker-compose exec -it <service-id> bash` or `sh`
+* See logs of a container: `sudo docker-compose logs <service-id>`
+* Monitor containers : `sudo docker stats` or... use portainer!

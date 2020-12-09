@@ -6,7 +6,7 @@ SHELL         = /bin/bash
 .SHELLFLAGS   = -o pipefail -c
 
 # For cleanup, get Compose project name from .env file
-DC_PROJECT?=$(shell cat .env | sed 's/^*=//')
+DC_PROJECT?=$(shell cat .env | sed 's/.*=//')
 
 # Every command is a PHONY, to avoid file naming confliction.
 .PHONY: help
@@ -29,7 +29,7 @@ up:
 
 .PHONY: build
 build:
-	docker-compose -f docker-compose.yml --build teamengine
+	docker-compose -f docker-compose.yml build teamengine
  
 .PHONY: update
 update: 

@@ -24,7 +24,7 @@ help:
 
 .PHONY: up
 up: 
-    git stash && git pull
+	git stash && git pull
 	docker-compose -f docker-compose.yml up -d --build --remove-orphans
 
 .PHONY: build
@@ -41,15 +41,15 @@ hard-cleanup
 	@echo "[INFO] Bringing done the TEAMEngine stack"
 	docker-compose -f docker-compose.yml down --remove-orphans
 	# 2nd : clean up all containers & images, without deleting static volumes
-    @echo "[INFO] Cleaning up containers & images"
+	@echo "[INFO] Cleaning up containers & images"
 	docker rm $(docker ps -a -q)
 	docker rmi $(docker images -q)
 	docker system prune -a
-    # Delete all hosted persistent data available in volumes
+	# Delete all hosted persistent data available in volumes
 	@echo "[INFO] Cleaning up static volumes"
-    docker volume rm -f $(DC_PROJECT)te-base
-    docker volume rm -f $(DC_PROJECT)te-data
-    docker volume rm -f $(DC_PROJECT)te-webapp
+	docker volume rm -f $(DC_PROJECT)te-base
+	docker volume rm -f $(DC_PROJECT)te-data
+	docker volume rm -f $(DC_PROJECT)te-webapp
 	# Remove all dangling docker volumes
 	@echo "[INFO] Remove all dangling docker volumes"
 	docker volume rm $(shell docker volume ls -qf dangling=true)

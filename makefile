@@ -33,8 +33,8 @@ build:
  
 .PHONY: update
 update: 
-	docker-compose -f docker-compose.yml pull 
-	docker-compose -f docker-compose.yml up -d --build teamengine 	
+	docker-compose -f docker-compose.yml pull teamengine
+	docker-compose -f docker-compose.yml up -d --build 	
 
 .PHONY: hard-cleanup
 hard-cleanup:
@@ -42,14 +42,10 @@ hard-cleanup:
 	docker-compose -f docker-compose.yml down --remove-orphans
 	# 2nd : clean up all containers & images, without deleting static volumes
 	@echo "[INFO] Cleaning up containers & images"
-	docker rm $(docker ps -a -q)
-	docker rmi $(docker images -q)
 	docker system prune -a
 	# Delete all hosted persistent data available in volumes
 	@echo "[INFO] Cleaning up static volumes"
-	docker volume rm -f $(DC_PROJECT)te-base
-	docker volume rm -f $(DC_PROJECT)te-data
-	docker volume rm -f $(DC_PROJECT)te-webapp
+	docker volume rm -f $(DC_PROJECT)_te-webapp
 	# Remove all dangling docker volumes
 	@echo "[INFO] Remove all dangling docker volumes"
 	docker volume rm $(shell docker volume ls -qf dangling=true)

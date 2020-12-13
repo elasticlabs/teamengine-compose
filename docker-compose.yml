@@ -4,8 +4,8 @@ services:
   #
   # Applications
   te-proxy:
-    image: ${COMPOSE_PROJECT_NAME}_te-proxy:latest
-    container_name: te-proxy4${COMPOSE_PROJECT_NAME}
+    image: ${COMPOSE_PROJECT_NAME}_entrypoint:latest
+    container_name: ${COMPOSE_PROJECT_NAME}_entrypoint
     restart: unless-stopped
     expose:
       - "80"
@@ -32,7 +32,7 @@ services:
         - TE_VERSION=${TE_VERSION}
         - GIT_NAME="Elastic Labs"
         - GIT_MAIL="contact@elasticlabs.co"
-    container_name: teamengine4${COMPOSE_PROJECT_NAME}
+    container_name: ${COMPOSE_PROJECT_NAME}_te_suites
     restart: unless-stopped
     expose: 
       - "8080"

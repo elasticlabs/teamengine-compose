@@ -18,7 +18,7 @@ This stack is meant to be deployed behind an automated NGINX based HTTPS proxy. 
 **Once you have a HTTPS reverse proxy**, navigate to the  [next](#teamengine-deployment-preparation) section.
 
 
-## TEAMEngine deployment preparation :
+## TEAMEngine deployment preparation
 * Choose & register a DNS name (e.g. `teamengine.your-awesome-domain.ltd`). Make sure it properly resolves from your server using `nslookup`commands.
 * Carefully create / choose an appropriate directory to group your applications GIT reposities (e.g. `~/AppContainers/`)
 * GIT clone this repository `git clone https://github.com/elasticlabs/teamengine-compose.git`

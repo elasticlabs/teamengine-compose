@@ -19,3 +19,7 @@ https://github.com/opengeospatial/ets-cdb10.git,0.4
 # (group 2) Put below all suites that need one of the above to be available in image local maven repository.
 https://github.com/elasticlabs/ets-wfs20-dgiwg.git,master
 https://github.com/opengeospatial/ets-wms13-dgiwg.git,0.4
+#
+# Below, 2 suites supporting latest DGIWG developments
+https://github.com/CESTA-centre/ets-wms13-dgiwg-2021.git
+https://github.com/CESTA-centre/ets-wmts10-dgiwg-2021

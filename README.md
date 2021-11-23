@@ -2,6 +2,9 @@
 # TEAMEngine docker composition suite
 OGC TEAMEngine docker-compose automated deployment, including most common test suites up and running in minutes!
 
+<p>
+  <img src="https://raw.githubusercontent.com/elasticlabs/teamengine-compose/main/architecture.png" alt="TEAMEngine architecture" width="600px">
+</p>
 
 **Table Of Contents:**
   - [Docker environment preparation](#docker-environment-preparation)

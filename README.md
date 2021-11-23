@@ -1,6 +1,6 @@
 [<img src="https://raw.githubusercontent.com/elasticlabs/teamengine-compose/main/certification-logo.gif" align="right" width="200px">](https://cite.opengeospatial.org/teamengine/)
 # TEAMEngine docker composition suite
-OGC TEAMEngine docker-compose automated deployment, including most common test suites up and running in minutes!
+OGC TEAMEngine docker-compose automated deployment, including most common test suites up and running in minutes! For HTTPS reverse proxy see [Elasticlabs HTTPS Nginx Proxy](https://github.com/elasticlabs/https-nginx-proxy-docker-compose).
 
 <p>
   <img src="https://raw.githubusercontent.com/elasticlabs/teamengine-compose/main/architecture.png" alt="TEAMEngine architecture" width="600px">

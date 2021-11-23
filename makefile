@@ -43,12 +43,6 @@ hard-cleanup:
 	# 2nd : clean up all containers & images, without deleting static volumes
 	@echo "[INFO] Cleaning up containers & images"
 	docker system prune -a
-	# Delete all hosted persistent data available in volumes
-	@echo "[INFO] Cleaning up static volumes"
-	docker volume rm -f $(DC_PROJECT)_te-webapp
-	# Remove all dangling docker volumes
-	@echo "[INFO] Remove all dangling docker volumes"
-	docker volume rm $(shell docker volume ls -qf dangling=true)
 
 .PHONY: wait
 wait: 
